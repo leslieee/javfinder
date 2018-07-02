@@ -26,6 +26,14 @@ class HomeController extends BaseController
 {
     public function index($request, $response, $args)
     {
+        $headerArray = $request->getHeader('User-Agent');
+        if (count($headerArray) == 1) {
+            $tmp = explode('MQQBrowser', $headerArray[0]);
+            if(count($tmp)>1){
+                echo '请点击右上角选择在浏览器中打开';
+                return;
+            }
+        }
         $infos = Avinfo::where('id', '<', '1000')
             ->orderByRaw('RAND()')
             ->take(48)
@@ -47,6 +55,14 @@ class HomeController extends BaseController
 
     public function moviePage($request, $response, $args)
     {
+        $headerArray = $request->getHeader('User-Agent');
+        if (count($headerArray) == 1) {
+            $tmp = explode('MQQBrowser', $headerArray[0]);
+            if(count($tmp)>1){
+                echo '请点击右上角选择在浏览器中打开';
+                return;
+            }
+        }
         $pageNum = $args['id'];
         $infos = Avinfo::paginate(48, ['*'], 'page', $pageNum);
         $index = false;
@@ -58,8 +74,14 @@ class HomeController extends BaseController
 
     public function watch($request, $response, $args)
     {
-
-        // return $this->redirect($response, '/movie/page/10');
+        $headerArray = $request->getHeader('User-Agent');
+        if (count($headerArray) == 1) {
+            $tmp = explode('MQQBrowser', $headerArray[0]);
+            if(count($tmp)>1){
+                echo '请点击右上角选择在浏览器中打开';
+                return;
+            }
+        }
         $id = $args['id'];
         $info = Avinfo::where('data_id', $id)->first();
         if ($info->embed == "") {
