@@ -10,6 +10,7 @@ use Slim\Http\Response;
 use App\Models\InviteCode;
 use App\Models\V2rayNode;
 use App\Models\User;
+use App\Models\Avinfo;
 use App\Services\Auth;
 use App\Services\Config;
 use App\Services\DbConfig;
@@ -23,38 +24,120 @@ use App\Utils\Hash;
  */
 class HomeController extends BaseController
 {
-
     public function index($request, $response, $args)
     {
-        //$homeIndexMsg = DbConfig::get('home-index');
-        //return $this->view()->assign('homeIndexMsg', $homeIndexMsg)->display('index.tpl');
-        return $this->redirect($response, '/auth/login');
+        $infos = Avinfo::where('id', '<', '500')
+            ->orderByRaw('RAND()')
+            ->take(48)
+            ->get();
+        $index = true;
+        return $this->view()
+            ->assign('infos', $infos)
+            ->assign('index', $index)
+            ->display('hot.tpl');
     }
 
-    public function intro()
+    public function moviePage($request, $response, $args)
     {
-        // return $this->redirect($response, '/auth/login');
-        // return $this->view()->display('intro.tpl');
-        
-        // if 模板1 或者 模板2
-        // return $this->view()->display('weixinshare1.tpl');
+        $pageNum = $args['id'];
+        $infos = Avinfo::paginate(48, ['*'], 'page', $pageNum);
+        $index = false;
+        return $this->view()
+            ->assign('infos', $infos)
+            ->assign('index', $index)
+            ->display('hot.tpl');
+    }
 
-        // 读取微信id
-        $file = fopen("wxid", "r");// or exit("无法打开文件!");
-        // 读取文件每一行，直到文件结尾
-        if ($file) {
-            $wxid = fgets($file);
-            fclose($file);
-            $file1 = fopen("html", "r");
-            if ($file1) {
-                $html = fread($file1,filesize("html"));
-                fclose($file1);
-                return $this->view()->assign('html', $html)->assign('wxid', $wxid)->display('weixinshare1.tpl');
+    public function watch($request, $response, $args)
+    {
+
+        // return $this->redirect($response, '/movie/page/10');
+        $id = $args['id'];
+        $info = Avinfo::where('data_id', $id)->first();
+        if ($info->embed == "") {
+            $curl = curl_init();
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => "https://javfinder.is/stream/sw0/" . $id,
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => "",
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 30,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => "GET",
+                CURLOPT_HTTPHEADER => array(
+                    "user-agent: Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.2272.101 Safari/537.36"
+                ),
+            ));
+            $respon = curl_exec($curl);
+            $err = curl_error($curl);
+            if ($err) {
+                echo "cURL Error #:" . $err;
             } else {
-                return $this->view()->assign('wxid', $wxid)->display('weixinshare1.tpl');
+                $res = json_decode($respon, true);
+                $data = json_decode($res["data"], true);
+                $command = "node ../javfinder.js" . " " . $data["ct"] . " " . $data["iv"] . " " . $data["s"];
+                exec($command,$array);
+                $out = $array[0];
+                $out = str_replace("fembed://", "", $out);
+                // 把fembed保存了
+                $info->embed = $out;
+                $info->save();
+                curl_setopt_array($curl, array(
+                    CURLOPT_URL => "https://www.fembed.com/api/sources/" . $out,
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_ENCODING => "",
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 30,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => "POST",
+                    CURLOPT_HTTPHEADER => array(
+                        "user-agent: Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.2272.101 Safari/537.36"
+                    ),
+                ));
+                $respon = curl_exec($curl);
+                $err = curl_error($curl);
+                if ($err) {
+                    echo "cURL Error #:" . $err;
+                } else {
+                    $res = json_decode($respon, true);
+                    if ($res["success"] == false) {
+                        echo $res["data"];
+                        return;
+                    }
+                    $last = end($res["data"]);
+                    return $this->redirect($response, $last["file"]);
+                }
             }
+            curl_close($curl);
         } else {
-            return $this->view()->display('weixinshare1.tpl');
+            // fembed已存在
+            $curl = curl_init();
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => "https://www.fembed.com/api/sources/" . $info->embed,
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => "",
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 30,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => "POST",
+                CURLOPT_HTTPHEADER => array(
+                    "user-agent: Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.2272.101 Safari/537.36"
+                ),
+            ));
+            $respon = curl_exec($curl);
+            $err = curl_error($curl);
+            if ($err) {
+                echo "cURL Error #:" . $err;
+            } else {
+                $res = json_decode($respon, true);
+                if ($res["success"] == false) {
+                    echo $res["data"];
+                    return;
+                }
+                $last = end($res["data"]);
+                return $this->redirect($response, $last["file"]);
+            }
+            curl_close($curl);
         }
     }
 

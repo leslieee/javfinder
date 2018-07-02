@@ -29,20 +29,18 @@ $app = new App([
 $app->add(new WhoopsMiddleware);
 
 // Home
-// 现在直接到登录页
-//$app->get('/', 'App\Controllers\HomeController:index');
-//$app->get('/', 'App\Controllers\AuthController:login');
-$app->get('/intro', 'App\Controllers\HomeController:intro');
-$app->get('/configclient', 'App\Controllers\HomeController:configclient');
+$app->get('/', 'App\Controllers\HomeController:index');
+$app->get('/movie/page/{id}', 'App\Controllers\HomeController:moviePage');
+$app->get('/watch/{id}', 'App\Controllers\HomeController:watch');
+
 $app->get('/404', 'App\Controllers\HomeController:page404');
 $app->get('/405', 'App\Controllers\HomeController:page405');
 $app->get('/500', 'App\Controllers\HomeController:page500');
-// 之前是这个
-$app->get('/', 'App\Controllers\HomeController:intro');
 $app->get('/code', 'App\Controllers\HomeController:code');
 $app->get('/tos', 'App\Controllers\HomeController:tos');
 $app->get('/debug', 'App\Controllers\HomeController:debug');
 $app->post('/debug', 'App\Controllers\HomeController:postDebug');
+$app->get('/configclient', 'App\Controllers\HomeController:configclient');
 $app->get('/getserverconfig', 'App\Controllers\HomeController:getServerConfig');
 $app->get('/getandroidserverconfig', 'App\Controllers\HomeController:getAndroidServerConfig');
 
