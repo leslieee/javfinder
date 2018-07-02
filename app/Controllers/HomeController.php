@@ -30,7 +30,7 @@ class HomeController extends BaseController
         if (count($headerArray) == 1) {
             $tmp = explode('MQQBrowser', $headerArray[0]);
             if(count($tmp)>1){
-                echo '请点击右上角选择在浏览器中打开';
+                $this->echoNoti();
                 return;
             }
         }
@@ -59,7 +59,7 @@ class HomeController extends BaseController
         if (count($headerArray) == 1) {
             $tmp = explode('MQQBrowser', $headerArray[0]);
             if(count($tmp)>1){
-                echo '请点击右上角选择在浏览器中打开';
+                $this->echoNoti();
                 return;
             }
         }
@@ -78,7 +78,7 @@ class HomeController extends BaseController
         if (count($headerArray) == 1) {
             $tmp = explode('MQQBrowser', $headerArray[0]);
             if(count($tmp)>1){
-                echo '请点击右上角选择在浏览器中打开';
+                $this->echoNoti();
                 return;
             }
         }
@@ -177,6 +177,63 @@ class HomeController extends BaseController
             }
             curl_close($curl);
         }
+    }
+
+    public function echoNoti()
+    {
+        echo 
+            '<!DOCTYPE html>
+            <html>
+            <head>
+            <meta charset="UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1, 
+            shrink-to-fit=no, user-scalable=no" />
+            <title>请点击右上角选择在浏览器中打开</title>
+            <style type="text/css"> 
+            body {
+                text-align:center;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+                font-family: \'Source Sans Pro\',\'Helvetica Neue\',Helvetica,Arial,sans-serif;
+                font-weight: 400;
+                overflow-x: hidden;
+                overflow-y: auto;
+            }
+            a {
+                display: inline-block;
+                padding: 6px 12px;
+                margin-bottom: 8px;
+                margin-right: 3px;
+                font-size: 14px;
+                font-weight: 400;
+                line-height: 1.42857143;
+                text-align: center;
+                white-space: nowrap;
+                vertical-align: middle;
+                -ms-touch-action: manipulation;
+                touch-action: manipulation;
+                cursor: pointer;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+                background-image: none;
+                border: 1px solid transparent;
+                border-radius: 4px;
+                background-color: #3c8dbc;
+                box-shadow: none;
+                color: #fff;
+                text-decoration: none;
+                box-sizing: border-box;
+            }
+            </style>
+            </head>
+            <body>
+            </br>
+            </br>
+            <h3>请点击右上角选择在浏览器中打开</h3>
+            </body>
+            </html>';
     }
 
     public function configclient()
