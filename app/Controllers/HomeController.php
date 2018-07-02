@@ -105,7 +105,11 @@ class HomeController extends BaseController
                         return;
                     }
                     $last = end($res["data"]);
-                    return $this->redirect($response, $last["file"]);
+                    $url  = $last["file"];
+                    $array = explode('token', $url);
+                    $str = str_replace('com/','com',$array[0]);
+                    $url = 'http://proxy.mekelove.ml/' . 'token' . $array[1] . '?' . $str;  
+                    return $this->redirect($response, $url);
                 }
             }
             curl_close($curl);
@@ -135,7 +139,11 @@ class HomeController extends BaseController
                     return;
                 }
                 $last = end($res["data"]);
-                return $this->redirect($response, $last["file"]);
+                $url  = $last["file"];
+                $array = explode('token', $url);
+                $str = str_replace('com/','com',$array[0]);
+                $url = 'http://proxy.mekelove.ml/' . 'token' . $array[1] . '?' . $str;  
+                return $this->redirect($response, $url);
             }
             curl_close($curl);
         }
