@@ -26,10 +26,18 @@ class HomeController extends BaseController
 {
     public function index($request, $response, $args)
     {
-        $infos = Avinfo::where('id', '<', '500')
+        $infos = Avinfo::where('id', '<', '1000')
             ->orderByRaw('RAND()')
             ->take(48)
             ->get();
+        $infos = $infos->filter(function($info){
+            $tmparray = explode('://',$info->embed);
+            if(count($tmparray)>1){
+                return false;
+            } else{
+                return true;
+            }
+        });
         $index = true;
         return $this->view()
             ->assign('infos', $infos)
