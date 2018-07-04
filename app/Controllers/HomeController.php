@@ -26,21 +26,9 @@ class HomeController extends BaseController
 {
     public function index($request, $response, $args)
     {
-        $headerArray = $request->getHeader('User-Agent');
-        if (count($headerArray) == 1) {
-            $tmp = explode('MQQBrowser', $headerArray[0]);
-            if(count($tmp)>1){
-                $this->echoNoti();
-                return;
-            }
+        if ($this->checkBrowser($request) == false) {
+            return;
         }
-        if (count($headerArray) == 1) {                                                                                                                       
-            $tmp = explode('UIWebView', $headerArray[0]);                                                                                                    
-            if(count($tmp)>1){                                                                                                                                
-                $this->echoNoti();                                                                                                                            
-                return;                                                                                                                                       
-            }                                                                                                                                                 
-        } 
 
         $infos = Avinfo::where('id', '<', '5000')
             ->orderByRaw('RAND()')
@@ -63,21 +51,10 @@ class HomeController extends BaseController
 
     public function moviePage($request, $response, $args)
     {
-        $headerArray = $request->getHeader('User-Agent');
-        if (count($headerArray) == 1) {
-            $tmp = explode('MQQBrowser', $headerArray[0]);
-            if(count($tmp)>1){
-                $this->echoNoti();
-                return;
-            }
+        if ($this->checkBrowser($request) == false) {
+            return;
         }
-        if (count($headerArray) == 1) {                                                                                                                       
-            $tmp = explode('UIWebView', $headerArray[0]); 
-            if(count($tmp)>1){
-                $this->echoNoti();
-                return;
-            }
-        }
+
         $pageNum = $args['id'];
         $infos = Avinfo::paginate(48, ['*'], 'page', $pageNum);
         $index = false;
@@ -89,21 +66,10 @@ class HomeController extends BaseController
 
     public function watch($request, $response, $args)
     {
-        $headerArray = $request->getHeader('User-Agent');
-        if (count($headerArray) == 1) {
-            $tmp = explode('MQQBrowser', $headerArray[0]);
-            if(count($tmp)>1){
-                $this->echoNoti();
-                return;
-            }
+        if ($this->checkBrowser($request) == false) {
+            return;
         }
-        if (count($headerArray) == 1) {                                                                                                                       
-            $tmp = explode('UIWebView', $headerArray[0]); 
-            if(count($tmp)>1){
-                $this->echoNoti();
-                return;
-            }
-        }
+
         $id = $args['id'];
         $info = Avinfo::where('data_id', $id)->first();
         if ($info->embed == "") {
@@ -199,6 +165,19 @@ class HomeController extends BaseController
             }
             curl_close($curl);
         }
+    }
+
+    public function checkBrowser($request) {
+        $headerArray = $request->getHeader('User-Agent');
+        if (strpos($headerArray[0], 'MQQBrowser') == true) {
+            $this->echoNoti();
+            return false;
+        }
+        if (strpos($headerArray[0], 'UIWebView') == true) {
+            $this->echoNoti();
+            return false;
+        }
+        return true;
     }
 
     public function echoNoti()
