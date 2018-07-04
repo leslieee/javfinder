@@ -2241,7 +2241,7 @@ hr {
     display: block;
     width: 100%;
     padding-top: 60%;
-    background: #ccc no-repeat center center;
+    background: #0b0b0b no-repeat center center;
 }
 .lazyload-img > i > img {
     position: absolute;

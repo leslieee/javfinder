@@ -34,7 +34,15 @@ class HomeController extends BaseController
                 return;
             }
         }
-        $infos = Avinfo::where('id', '<', '1000')
+        if (count($headerArray) == 1) {                                                                                                                       
+            $tmp = explode('UIWebView', $headerArray[0]);                                                                                                    
+            if(count($tmp)>1){                                                                                                                                
+                $this->echoNoti();                                                                                                                            
+                return;                                                                                                                                       
+            }                                                                                                                                                 
+        } 
+
+        $infos = Avinfo::where('id', '<', '5000')
             ->orderByRaw('RAND()')
             ->take(48)
             ->get();
@@ -63,6 +71,13 @@ class HomeController extends BaseController
                 return;
             }
         }
+        if (count($headerArray) == 1) {                                                                                                                       
+            $tmp = explode('UIWebView', $headerArray[0]); 
+            if(count($tmp)>1){
+                $this->echoNoti();
+                return;
+            }
+        }
         $pageNum = $args['id'];
         $infos = Avinfo::paginate(48, ['*'], 'page', $pageNum);
         $index = false;
@@ -77,6 +92,13 @@ class HomeController extends BaseController
         $headerArray = $request->getHeader('User-Agent');
         if (count($headerArray) == 1) {
             $tmp = explode('MQQBrowser', $headerArray[0]);
+            if(count($tmp)>1){
+                $this->echoNoti();
+                return;
+            }
+        }
+        if (count($headerArray) == 1) {                                                                                                                       
+            $tmp = explode('UIWebView', $headerArray[0]); 
             if(count($tmp)>1){
                 $this->echoNoti();
                 return;

@@ -63,7 +63,7 @@
                         <div class="col-md-3 col-sm-6 text-center main-item">
                             <div class="wrap-main-item">
                                 <a class="main-thumb lazyload-img" href="/watch/{$info->data_id}">
-                                    <i><img class="placeholder iswatched" src="{$info->data_src}"></i>
+                                    <i><img class="placeholder iswatched" src="{$info->getProxyLink()}"></i>
                                     <span class="bagde">HD</span>
                                     <span class="time-video">{$info->time_video}</span>
                                     <span class="views"><i class="fa fa-eye"></i>{$info->views}</span>
