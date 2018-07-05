@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{$info->alt}</title>
     <link rel="stylesheet" href="/assets/public/css/core.css">
-    <link href="/assets/public/css/video-js.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/public/css/video-js.min.css">
     <script>
         window.HELP_IMPROVE_VIDEOJS = false;
     </script>
@@ -115,6 +115,16 @@
         },false);        
     </script>
     <script src="/assets/public/js/video.min.js"></script>
+    <script src="/assets/public/js/videojs.hotkeys.min.js"></script>
+    <script>
+        videojs('my-player').ready(function() {
+            this.hotkeys({
+                volumeStep: 0.1,
+                seekStep: 10,
+                enableModifiersForNumbers: false
+            });
+        });
+    </script>
 </body>
 
 </html>
