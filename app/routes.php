@@ -30,8 +30,14 @@ $app->add(new WhoopsMiddleware);
 
 // Home
 $app->get('/', 'App\Controllers\HomeController:index');
-$app->get('/movie/page/{id}', 'App\Controllers\HomeController:moviePage');
+$app->get('/movie/page/{page}', 'App\Controllers\HomeController:moviePage');
 $app->get('/watch/{id}', 'App\Controllers\HomeController:watch');
+$app->get('/search/{key}', 'App\Controllers\HomeController:search');
+
+$app->get('/api/index', 'App\Controllers\HomeController:apiIndex');
+$app->get('/api/page/{page}', 'App\Controllers\HomeController:apiPage');
+$app->get('/api/watch/{id}', 'App\Controllers\HomeController:apiWatch');
+$app->get('/api/search/{key}', 'App\Controllers\HomeController:apiSearch');
 
 $app->get('/404', 'App\Controllers\HomeController:page404');
 $app->get('/405', 'App\Controllers\HomeController:page405');

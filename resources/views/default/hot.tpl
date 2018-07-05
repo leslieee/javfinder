@@ -28,9 +28,9 @@
                 <div class="col-md-6">
                     <div class="navbar-form navbar-left search-form">
                         <div class="form-group">
-                            <input type="text" class="form-control search-field search-key" placeholder="Movies Search">
+                            <input id="search_input" type="text" class="form-control search-field search-key" placeholder="Movies Search" value="{$key}">
                         </div>
-                        <button class="btn btn-default search-submit"><i class="fa fa-search"></i></button>
+                        <button id="search_button" class="btn btn-default search-submit"><i class="fa fa-search"></i></button>
                     </div>
                 </div>
                 <div class="col-md-4 text-right hidden-sm hidden-xs">
@@ -48,7 +48,11 @@
                     <div class="bar-main-block clearfix">
                         <div class="row">
                             <div class="col-md-8 col-xs-8">
+                                {if $key != ""}
+                                <h2 class="text-left">Search: {$key}</h2>
+                                {else}
                                 <h2 class="text-left">Popular Porn Videos</h2>
+                                {/if}
                             </div>
                             {if $index}
                             <div class="col-md-4 col-xs-4">
@@ -124,6 +128,12 @@
         </div>
     </footer>
     <a href="#" class="to-top" style=""><i class="fa fa-long-arrow-up"></i></a>
+    <script>
+        document.getElementById('search_button').addEventListener('click', function(){
+            var value = document.getElementById('search_input').value;
+            window.location.href = "/search/" + value;
+        },false);        
+    </script>
 </body>
 
 </html>

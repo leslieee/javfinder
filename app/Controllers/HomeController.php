@@ -43,10 +43,37 @@ class HomeController extends BaseController
             }
         });
         $index = true;
+        $key = "";
         return $this->view()
             ->assign('infos', $infos)
             ->assign('index', $index)
+            ->assign('key', $key)
             ->display('hot.tpl');
+    }
+
+    public function apiIndex($request, $response, $args)
+    {
+        if ($this->checkBrowser($request) == false) {
+            return;
+        }
+
+        $infos = Avinfo::where('id', '<', '5000')
+            ->orderByRaw('RAND()')
+            ->take(48)
+            ->get();
+        $infos = $infos->filter(function($info){
+            if (strpos($info->embed, '://') !== false) {
+                return false;
+            } else {
+                return true;
+            }
+        });
+        $res = [
+            "ret" => 1, 
+            "msg" => 'success',
+            "data" => $infos 
+        ];
+        return $this->echoJson($response, $res);
     }
 
     public function moviePage($request, $response, $args)
@@ -55,13 +82,89 @@ class HomeController extends BaseController
             return;
         }
 
-        $pageNum = $args['id'];
+        $pageNum = $args['page'];
         $infos = Avinfo::paginate(48, ['*'], 'page', $pageNum);
         $index = false;
+        $key = "";
         return $this->view()
             ->assign('infos', $infos)
             ->assign('index', $index)
+            ->assign('key', $key)
             ->display('hot.tpl');
+    }
+
+    public function apiPage($request, $response, $args)
+    {
+        if ($this->checkBrowser($request) == false) {
+            return;
+        }
+
+        $pageNum = $args['page'];
+        $infos = Avinfo::paginate(48, ['*'], 'page', $pageNum);
+        $infos = $infos->filter(function($info){
+            if (strpos($info->embed, '://') !== false) {
+                return false;
+            } else {
+                return true;
+            }
+        });
+        $res = [
+            "ret" => 1, 
+            "msg" => 'success',
+            "data" => $infos 
+        ];
+        return $this->echoJson($response, $res);
+    }
+
+    public function search($request, $response, $args)
+    {
+        if ($this->checkBrowser($request) == false) {
+            return;
+        }
+
+        $key = $args['key'];
+        $infos = Avinfo::where('alt', 'like', '%'.$key.'%')
+            ->take(100)
+            ->get();
+        $infos = $infos->filter(function($info){
+            if (strpos($info->embed, '://') !== false) {
+                return false;
+            } else {
+                return true;
+            }
+        });
+
+        $index = true;
+        return $this->view()
+            ->assign('infos', $infos)
+            ->assign('index', $index)
+            ->assign('key', $key)
+            ->display('hot.tpl');
+    }
+
+    public function apiSearch($request, $response, $args)
+    {
+        if ($this->checkBrowser($request) == false) {
+            return;
+        }
+
+        $key = $args['key'];
+        $infos = Avinfo::where('alt', 'like', '%'.$key.'%')
+            ->take(100)
+            ->get();
+        $infos = $infos->filter(function($info){
+            if (strpos($info->embed, '://') !== false) {
+                return false;
+            } else {
+                return true;
+            }
+        });
+        $res = [
+            "ret" => 1, 
+            "msg" => 'success',
+            "data" => $infos 
+        ];
+        return $this->echoJson($response, $res);
     }
 
     public function watch($request, $response, $args)
@@ -119,15 +222,33 @@ class HomeController extends BaseController
                 } else {
                     $res = json_decode($respon, true);
                     if ($res["success"] == false) {
-                        echo $res["data"];
-                        return;
+                        // echo $res["data"];
+                        // return;
+                        return $this->redirect($response, '/');
                     }
                     $last = end($res["data"]);
                     $url  = $last["file"];
                     $array = explode('token', $url);
                     $str = str_replace('com/','com',$array[0]);
                     $url = 'http://proxy.mekelove.ml/' . 'token' . $array[1] . '?' . $str;  
-                    return $this->redirect($response, $url);
+                    // return $this->redirect($response, $url);
+                    $infos = Avinfo::where('star', 'like', '%'.$info->star.'%')
+                        ->take(20)
+                        ->get();
+                    $infos = $infos->filter(function($info){
+                        if (strpos($info->embed, '://') !== false) {
+                            return false;
+                        } else {
+                            return true;
+                        }
+                    });
+                    return $this->view()
+                        ->assign('info', $info)
+                        ->assign('infos', $infos)
+                        ->assign('url', $url)
+                        ->assign('index', false)
+                        ->assign('key', "")
+                        ->display('watch.tpl');
                 }
             }
             curl_close($curl);
@@ -153,15 +274,164 @@ class HomeController extends BaseController
             } else {
                 $res = json_decode($respon, true);
                 if ($res["success"] == false) {
-                    echo $res["data"];
-                    return;
+                    // echo $res["data"];
+                    // return;
+                    return $this->redirect($response, '/');
                 }
                 $last = end($res["data"]);
                 $url  = $last["file"];
                 $array = explode('token', $url);
                 $str = str_replace('com/','com',$array[0]);
                 $url = 'http://proxy.mekelove.ml/' . 'token' . $array[1] . '?' . $str;  
-                return $this->redirect($response, $url);
+                // return $this->redirect($response, $url);
+                $infos = Avinfo::where('star', 'like', '%'.$info->star.'%')
+                    ->take(20)
+                    ->get();
+                $infos = $infos->filter(function($info){
+                    if (strpos($info->embed, '://') !== false) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                });
+                return $this->view()
+                        ->assign('info', $info)
+                        ->assign('infos', $infos)
+                        ->assign('url', $url)
+                        ->assign('index', false)
+                        ->assign('key', "")
+                        ->display('watch.tpl');
+            }
+            curl_close($curl);
+        }
+    }
+
+    public function apiWatch($request, $response, $args)
+    {
+        if ($this->checkBrowser($request) == false) {
+            return;
+        }
+
+        $id = $args['id'];
+        $info = Avinfo::where('data_id', $id)->first();
+        if ($info->embed == "") {
+            $curl = curl_init();
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => "https://javfinder.is/stream/sw0/" . $id,
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => "",
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 30,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => "GET",
+                CURLOPT_HTTPHEADER => array(
+                    "user-agent: Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.2272.101 Safari/537.36"
+                ),
+            ));
+            $respon = curl_exec($curl);
+            $err = curl_error($curl);
+            if ($err) {
+                $res = [
+                    "ret" => 0, 
+                    "msg" => "cURL Error #:" . $err
+                ];
+                return $this->echoJson($response, $res);
+            } else {
+                $res = json_decode($respon, true);
+                $data = json_decode($res["data"], true);
+                $command = "node ../javfinder.js" . " " . $data["ct"] . " " . $data["iv"] . " " . $data["s"];
+                exec($command,$array);
+                $out = $array[0];
+                $out = str_replace("fembed://", "", $out);
+                // 把fembed保存了
+                $info->embed = $out;
+                $info->save();
+                curl_setopt_array($curl, array(
+                    CURLOPT_URL => "https://www.fembed.com/api/sources/" . $out,
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_ENCODING => "",
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 30,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => "POST",
+                    CURLOPT_HTTPHEADER => array(
+                        "user-agent: Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.2272.101 Safari/537.36"
+                    ),
+                ));
+                $respon = curl_exec($curl);
+                $err = curl_error($curl);
+                if ($err) {
+                    $res = [
+                        "ret" => 0, 
+                        "msg" => "cURL Error #:" . $err
+                    ];
+                    return $this->echoJson($response, $res);
+                } else {
+                    $res = json_decode($respon, true);
+                    if ($res["success"] == false) {
+                        $res = [
+                            "ret" => 0, 
+                            "msg" => $res["data"]
+                        ];
+                        return $this->echoJson($response, $res);
+                    }
+                    $last = end($res["data"]);
+                    $url  = $last["file"];
+                    $array = explode('token', $url);
+                    $str = str_replace('com/','com',$array[0]);
+                    $url = 'http://proxy.mekelove.ml/' . 'token' . $array[1] . '?' . $str;  
+                    $res = [
+                        "ret" => 1, 
+                        "msg" => 'success',
+                        "url" => $url
+                    ];
+                    return $this->echoJson($response, $res);
+                }
+            }
+            curl_close($curl);
+        } else {
+            // fembed已存在
+            $curl = curl_init();
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => "https://www.fembed.com/api/sources/" . $info->embed,
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => "",
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 30,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => "POST",
+                CURLOPT_HTTPHEADER => array(
+                    "user-agent: Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.2272.101 Safari/537.36"
+                ),
+            ));
+            $respon = curl_exec($curl);
+            $err = curl_error($curl);
+            if ($err) {
+                $res = [
+                    "ret" => 0, 
+                    "msg" => "cURL Error #:" . $err
+                ];
+                return $this->echoJson($response, $res);
+            } else {
+                $res = json_decode($respon, true);
+                if ($res["success"] == false) {
+                    $res = [
+                        "ret" => 0, 
+                        "msg" => $res["data"]
+                    ];
+                    return $this->echoJson($response, $res);
+                }
+                $last = end($res["data"]);
+                $url  = $last["file"];
+                $array = explode('token', $url);
+                $str = str_replace('com/','com',$array[0]);
+                $url = 'http://proxy.mekelove.ml/' . 'token' . $array[1] . '?' . $str;  
+                $res = [
+                    "ret" => 1, 
+                    "msg" => 'success',
+                    "url" => $url
+                ];
+                return $this->echoJson($response, $res);
             }
             curl_close($curl);
         }
