@@ -178,7 +178,7 @@ class HomeController extends BaseController
         if ($info->embed == "") {
             $curl = curl_init();
             curl_setopt_array($curl, array(
-                CURLOPT_URL => "https://javfinder.is/stream/sw0/" . $id,
+                CURLOPT_URL => "https://www5.javfinder.is/stream/sw0/" . $id,
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => "",
                 CURLOPT_MAXREDIRS => 10,
@@ -317,7 +317,7 @@ class HomeController extends BaseController
         if ($info->embed == "") {
             $curl = curl_init();
             curl_setopt_array($curl, array(
-                CURLOPT_URL => "https://javfinder.is/stream/sw0/" . $id,
+                CURLOPT_URL => "https://www5.javfinder.is/stream/sw0/" . $id,
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => "",
                 CURLOPT_MAXREDIRS => 10,
