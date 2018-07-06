@@ -64,7 +64,7 @@
                     </div>
                     <div class="bar-main-block clearfix">
                         <div class="row">
-                            <h2>Same Porn Star</a></h2>
+                            <h2>{$info->star}</h2>
                         </div>
                     </div>
                     <div class="row">

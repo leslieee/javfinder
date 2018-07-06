@@ -73,7 +73,7 @@
                                     <span class="views"><i class="fa fa-eye"></i>{$info->views}</span>
                                 </a>
                                 <h5><a href="/watch/{$info->data_id}" title="">{$info->alt}</a></h5>
-                                <p>Star: <a href="">{$info->star}</a></p>
+                                <p>Star: <a href="/search/{$info->star}">{$info->star}</a></p>
                             </div>
                         </div>
                         {/foreach}
