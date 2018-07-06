@@ -40,8 +40,8 @@
         <section id="primary">
             <div class="wrap-block">
                 <div class="container">
-                    <div class="row">
-                        <div class="bar-main-block clearfix">
+                    <div class="bar-main-block clearfix">
+                        <div class="row">
                             {if $key != ""}
                             <h2 class="text-left">Search: {$key}</h2>
                             {else}
@@ -50,22 +50,20 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="text-center">
-                            <div class="col-md-1"></div>
-                            <div class="col-md-10">
-                                <video id="my-player" class="video-js vjs-default-skin vjs-big-play-centered" controls poster="{$info->getProxyLink()}" data-setup='{
-                                "fluid": true,
-                                "loop": "true",
-                                "autoplay": true,
-                                "preload": "auto"}'>
-                                <source src="{$url}" type="video/mp4"></source>
-                                </video>
-                            </div>
-                            <div class="col-md-1"></div>
+                        <div class="col-md-1"></div>
+                        <div class="col-md-10">
+                            <video id="my-player" class="video-js vjs-default-skin vjs-big-play-centered" controls poster="{$info->getProxyLink()}" data-setup='{
+                            "fluid": true,
+                            "loop": "true",
+                            "autoplay": true,
+                            "preload": "auto"}'>
+                            <source src="{$url}" type="video/mp4"></source>
+                            </video>
                         </div>
+                        <div class="col-md-1"></div>
                     </div>
-                    <div class="row">
-                        <div class="bar-main-block">
+                    <div class="bar-main-block clearfix">
+                        <div class="row">
                             <h2>Same Porn Star</a></h2>
                         </div>
                     </div>
@@ -86,9 +84,9 @@
                         </div>
                         {/foreach}
                     </div>
-                    <div class="row">
-                        <div class="text-center">
-                            <div class="bar-main-block">
+                    <div class="bar-main-block">
+                        <div class="row">
+                            <div class="text-center">
                                 <h2><a href="/search/{$info->star}" title="">View All Videos</a></h2>
                             </div>
                         </div>

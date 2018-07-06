@@ -79,37 +79,36 @@
                         {/foreach}
                     </div>
                     <!-- pagination -->
-                    <div class="row">
-                        <div class="text-center">
-                            {if $index}
-                                <div class="bar-main-block">
-                                    <h2><a href="/movie/page/1" title="">View All Videos</a></h2>
-                                </div>
-                                
-                            {else}
-                                <ul class="pagination">
-                                    {if $infos->currentPage()==1}
-                                    <li><a href="/movie/page/{$infos->currentPage()}"><i class="fa fa-angle-double-left"></i></a></li>
-                                    {else}
-                                    <li><a href="/movie/page/{$infos->currentPage()-1}"><i class="fa fa-angle-double-left"></i></a></li>
-                                    {/if}
-                                    {if $infos->currentPage()>2}
-                                        <li><a href="/movie/page/{$infos->currentPage()-2}">{$infos->currentPage()-2}</a></li>
-                                        <li><a href="/movie/page/{$infos->currentPage()-1}">{$infos->currentPage()-1}</a></li>
-                                    {/if}
-                                    <li class="active"><a href="/movie/page/{$infos->currentPage()}">{$infos->currentPage()}</a></li>
-                                    {if $infos->hasMorePages()}
-                                        <li><a href="/movie/page/{$infos->currentPage()+1}">{$infos->currentPage()+1}</a></li>
-                                        <li><a href="/movie/page/{$infos->currentPage()+2}">{$infos->currentPage()+2}</a></li>
-                                    {/if}
-                                    {if $infos->hasMorePages()}
-                                        <li><a href="/movie/page/{$infos->currentPage()+1}"><i class="fa fa-angle-double-right"></i></a></li>
-                                    {else}
-                                        <li><a href="/movie/page/{$infos->currentPage()}"><i class="fa fa-angle-double-right"></i></a></li>
-                                    {/if}
-                                </ul>
-                            {/if}
-                            
+                    <div class="bar-main-block">
+                        <div class="row">
+                            <div class="text-center">
+                                {if $index}
+                                        <h2><a href="/movie/page/1" title="">View All Videos</a></h2>
+                                    
+                                {else}
+                                        <ul class="pagination">
+                                        {if $infos->currentPage()==1}
+                                        <li><a href="/movie/page/{$infos->currentPage()}"><i class="fa fa-angle-double-left"></i></a></li>
+                                        {else}
+                                        <li><a href="/movie/page/{$infos->currentPage()-1}"><i class="fa fa-angle-double-left"></i></a></li>
+                                        {/if}
+                                        {if $infos->currentPage()>2}
+                                            <li><a href="/movie/page/{$infos->currentPage()-2}">{$infos->currentPage()-2}</a></li>
+                                            <li><a href="/movie/page/{$infos->currentPage()-1}">{$infos->currentPage()-1}</a></li>
+                                        {/if}
+                                        <li class="active"><a href="/movie/page/{$infos->currentPage()}">{$infos->currentPage()}</a></li>
+                                        {if $infos->hasMorePages()}
+                                            <li><a href="/movie/page/{$infos->currentPage()+1}">{$infos->currentPage()+1}</a></li>
+                                            <li><a href="/movie/page/{$infos->currentPage()+2}">{$infos->currentPage()+2}</a></li>
+                                        {/if}
+                                        {if $infos->hasMorePages()}
+                                            <li><a href="/movie/page/{$infos->currentPage()+1}"><i class="fa fa-angle-double-right"></i></a></li>
+                                        {else}
+                                            <li><a href="/movie/page/{$infos->currentPage()}"><i class="fa fa-angle-double-right"></i></a></li>
+                                        {/if}
+                                    </ul>
+                                {/if}
+                            </div>
                         </div>
                     </div>
                     <!-- /pagination -->
