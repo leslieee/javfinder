@@ -30,9 +30,9 @@ class HomeController extends BaseController
             return;
         }
 
-        $infos = Avinfo::where('id', '<', '5000')
+        $infos = Avinfo::where('id', '<', '8000')
             ->orderByRaw('RAND()')
-            ->take(48)
+            ->take(100)
             ->get();
         $infos = $infos->filter(function($info){
             $tmparray = explode('://',$info->embed);
