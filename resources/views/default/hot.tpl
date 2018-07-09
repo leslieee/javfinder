@@ -14,15 +14,8 @@
         <nav class="navbar navbar-default megamenu">
             <div class="container">
                 <div class="col-md-2">
-                    <!-- Brand and toggle get grouped for better mobile display -->
                     <div class="navbar-header">
-                        <!--<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-navbar-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        </button>-->
-                        <a class="navbar-brand" href="/"><img src="https://cdnfd.me/v1/img/logo.png?1503498498" alt="Logo"></a>
+                        <a class="navbar-brand" href="/"><img src="/assets/public/img/logo.png" alt="Logo"></a>
                     </div>
                 </div>
                 <div class="col-md-6">

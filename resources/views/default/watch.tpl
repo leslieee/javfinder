@@ -19,7 +19,7 @@
             <div class="container">
                 <div class="col-md-2">
                     <div class="navbar-header">
-                        <a class="navbar-brand" href="/"><img src="https://cdnfd.me/v1/img/logo.png?1503498498" alt="Logo"></a>
+                        <a class="navbar-brand" href="/"><img src="/assets/public/img/logo.png" alt="Logo"></a>
                     </div>
                 </div>
                 <div class="col-md-6">
