@@ -175,10 +175,10 @@ class HomeController extends BaseController
 
         $id = $args['id'];
         $info = Avinfo::where('data_id', $id)->first();
-        if ($info->embed == "") {
+        if ($info->embed == "" || $info->embed == "null") {
             $curl = curl_init();
             curl_setopt_array($curl, array(
-                CURLOPT_URL => "https://www5.javfinder.is/stream/sw0/" . $id,
+                CURLOPT_URL => "https://javfinder.ru/stream/sw0/" . $id,
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => "",
                 CURLOPT_MAXREDIRS => 10,
@@ -204,7 +204,7 @@ class HomeController extends BaseController
                 $info->embed = $out;
                 $info->save();
                 curl_setopt_array($curl, array(
-                    CURLOPT_URL => "https://www.fembed.com/api/sources/" . $out,
+                    CURLOPT_URL => "https://qdembed.com/api/source/" . $out,
                     CURLOPT_RETURNTRANSFER => true,
                     CURLOPT_ENCODING => "",
                     CURLOPT_MAXREDIRS => 10,
@@ -227,7 +227,18 @@ class HomeController extends BaseController
                         return $this->redirect($response, '/');
                     }
                     $last = end($res["data"]);
-                    $url  = $last["file"];
+                    $url  = "https://qdembed.com" . $last["file"];
+                    // 解析真实地址
+                    $ch = curl_init();
+                    curl_setopt($ch, CURLOPT_URL, $url); //set url
+                    curl_setopt($ch, CURLOPT_HEADER, true); //get header
+                    curl_setopt($ch, CURLOPT_NOBODY, true); //do not include response body
+                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); //do not show in browser the response
+                    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true); //follow any redirects
+                    curl_exec($ch);
+                    $new_url = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL); //extract the url from the header response
+                    curl_close($ch);
+                    $url = $new_url;
                     $array = explode('token', $url);
                     $str = str_replace('com/','com',$array[0]);
                     $url = 'http://proxy.mekelove.ml/' . 'token' . $array[1] . '?' . $str;  
@@ -256,7 +267,7 @@ class HomeController extends BaseController
             // fembed已存在
             $curl = curl_init();
             curl_setopt_array($curl, array(
-                CURLOPT_URL => "https://www.fembed.com/api/sources/" . $info->embed,
+                CURLOPT_URL => "https://qdembed.com/api/source/" . $info->embed,
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => "",
                 CURLOPT_MAXREDIRS => 10,
@@ -279,7 +290,18 @@ class HomeController extends BaseController
                     return $this->redirect($response, '/');
                 }
                 $last = end($res["data"]);
-                $url  = $last["file"];
+                $url  = "https://qdembed.com" . $last["file"];
+                // 解析真实地址
+                $ch = curl_init();
+                curl_setopt($ch, CURLOPT_URL, $url); //set url
+                curl_setopt($ch, CURLOPT_HEADER, true); //get header
+                curl_setopt($ch, CURLOPT_NOBODY, true); //do not include response body
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); //do not show in browser the response
+                curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true); //follow any redirects
+                curl_exec($ch);
+                $new_url = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL); //extract the url from the header response
+                curl_close($ch);
+                $url = $new_url;
                 $array = explode('token', $url);
                 $str = str_replace('com/','com',$array[0]);
                 $url = 'http://proxy.mekelove.ml/' . 'token' . $array[1] . '?' . $str;  
@@ -314,10 +336,10 @@ class HomeController extends BaseController
 
         $id = $args['id'];
         $info = Avinfo::where('data_id', $id)->first();
-        if ($info->embed == "") {
+        if ($info->embed == "" || $info->embed == "null") {
             $curl = curl_init();
             curl_setopt_array($curl, array(
-                CURLOPT_URL => "https://www5.javfinder.is/stream/sw0/" . $id,
+                CURLOPT_URL => "https://javfinder.ru/stream/sw0/" . $id,
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => "",
                 CURLOPT_MAXREDIRS => 10,
@@ -347,7 +369,7 @@ class HomeController extends BaseController
                 $info->embed = $out;
                 $info->save();
                 curl_setopt_array($curl, array(
-                    CURLOPT_URL => "https://www.fembed.com/api/sources/" . $out,
+                    CURLOPT_URL => "https://qdembed.com/api/source/" . $out,
                     CURLOPT_RETURNTRANSFER => true,
                     CURLOPT_ENCODING => "",
                     CURLOPT_MAXREDIRS => 10,
@@ -376,7 +398,18 @@ class HomeController extends BaseController
                         return $this->echoJson($response, $res);
                     }
                     $last = end($res["data"]);
-                    $url  = $last["file"];
+                    $url  = "https://qdembed.com" . $last["file"];
+                    // 解析真实地址
+                    $ch = curl_init();
+                    curl_setopt($ch, CURLOPT_URL, $url); //set url
+                    curl_setopt($ch, CURLOPT_HEADER, true); //get header
+                    curl_setopt($ch, CURLOPT_NOBODY, true); //do not include response body
+                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); //do not show in browser the response
+                    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true); //follow any redirects
+                    curl_exec($ch);
+                    $new_url = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL); //extract the url from the header response
+                    curl_close($ch);
+                    $url = $new_url;
                     $array = explode('token', $url);
                     $str = str_replace('com/','com',$array[0]);
                     $url = 'http://proxy.mekelove.ml/' . 'token' . $array[1] . '?' . $str;  
@@ -393,7 +426,7 @@ class HomeController extends BaseController
             // fembed已存在
             $curl = curl_init();
             curl_setopt_array($curl, array(
-                CURLOPT_URL => "https://www.fembed.com/api/sources/" . $info->embed,
+                CURLOPT_URL => "https://qdembed.com/api/source/" . $info->embed,
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => "",
                 CURLOPT_MAXREDIRS => 10,
@@ -422,7 +455,18 @@ class HomeController extends BaseController
                     return $this->echoJson($response, $res);
                 }
                 $last = end($res["data"]);
-                $url  = $last["file"];
+                $url  = "https://qdembed.com" . $last["file"];
+                // 解析真实地址
+                $ch = curl_init();
+                curl_setopt($ch, CURLOPT_URL, $url); //set url
+                curl_setopt($ch, CURLOPT_HEADER, true); //get header
+                curl_setopt($ch, CURLOPT_NOBODY, true); //do not include response body
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); //do not show in browser the response
+                curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true); //follow any redirects
+                curl_exec($ch);
+                $new_url = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL); //extract the url from the header response
+                curl_close($ch);
+                $url = $new_url;
                 $array = explode('token', $url);
                 $str = str_replace('com/','com',$array[0]);
                 $url = 'http://proxy.mekelove.ml/' . 'token' . $array[1] . '?' . $str;  
