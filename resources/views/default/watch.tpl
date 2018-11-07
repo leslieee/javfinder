@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0b0b0b">
     <title>{$info->alt}</title>
     <link rel="stylesheet" href="/assets/public/css/core.css">
     <link rel="stylesheet" href="/assets/public/css/video-js.min.css">
@@ -53,6 +54,7 @@
                         <div class="col-md-1"></div>
                         <div class="col-md-10">
                             <video id="my-player" class="video-js vjs-default-skin vjs-big-play-centered" controls poster="{$info->getProxyLink()}" data-setup='{
+                            "playbackRates": [0.5, 1.0, 1.5, 2.0 ,2.5, 3],
                             "fluid": true,
                             "loop": "true",
                             "autoplay": true,

@@ -30,7 +30,7 @@ class HomeController extends BaseController
             return;
         }
 
-        $infos = Avinfo::where('id', '<', '8000')
+        $infos = Avinfo::where('id', '<', '12000')
             ->orderByRaw('RAND()')
             ->take(100)
             ->get();
