@@ -42,11 +42,13 @@
                 <div class="container">
                     <div class="bar-main-block clearfix">
                         <div class="row">
-                            {if $key != ""}
-                            <h2 class="text-left">Search: {$key}</h2>
-                            {else}
-                            <h2 class="text-left">{$info->alt}</h2>
-                            {/if}
+                            <div class="col-md-10">
+                                {if $key != ""}
+                                <h2 class="text-left">Search: {$key}</h2>
+                                {else}
+                                <h2 class="text-left">{$info->alt}</h2>
+                                {/if}
+                            </div>
                         </div>
                     </div>
                     <div class="row">
@@ -62,9 +64,27 @@
                         </div>
                         <div class="col-md-1"></div>
                     </div>
+                    <div class="bar-main-block clearfix hidden-md hidden-lg">
+                        <div class="row">
+                            <div class="col-md-10">
+                                <h2> 视频卡顿?
+                                    <a href="http://b.mekelove.ml/watch/{$info->data_id}"> 电信线路 </a>
+                                    <a href="http://a.mekelove.ml/watch/{$info->data_id}"> 联通线路 </a>
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
                     <div class="bar-main-block clearfix">
                         <div class="row">
-                            <h2>{$info->star}</h2>
+                            <div class="col-md-4">
+                                <h2>{$info->star}</h2>
+                            </div>
+                            <div class="col-md-6 hidden-sm hidden-xs">
+                                <h2>视频卡顿?
+                                    <a href="http://b.mekelove.ml/watch/{$info->data_id}"> 电信线路 </a>
+                                    <a href="http://a.mekelove.ml/watch/{$info->data_id}"> 联通线路 </a>
+                                </h2>
+                            </div>
                         </div>
                     </div>
                     <div class="row">
