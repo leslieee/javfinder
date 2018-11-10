@@ -30,6 +30,7 @@ $app->add(new WhoopsMiddleware);
 
 // Home
 $app->get('/', 'App\Controllers\HomeController:index');
+$app->get('/randmode', 'App\Controllers\HomeController:newIndex');
 $app->get('/movie/page/{page}', 'App\Controllers\HomeController:moviePage');
 $app->get('/watch/{id}', 'App\Controllers\HomeController:watch');
 $app->get('/search/{key}', 'App\Controllers\HomeController:search');

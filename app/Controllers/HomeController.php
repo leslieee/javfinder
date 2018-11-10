@@ -11,6 +11,7 @@ use App\Models\InviteCode;
 use App\Models\V2rayNode;
 use App\Models\User;
 use App\Models\Avinfo;
+use App\Models\Avinfonew;
 use App\Services\Auth;
 use App\Services\Config;
 use App\Services\DbConfig;
@@ -43,10 +44,41 @@ class HomeController extends BaseController
             }
         });
         $index = true;
+        $new = false;
         $key = "";
         return $this->view()
             ->assign('infos', $infos)
             ->assign('index', $index)
+            ->assign('new', $new)
+            ->assign('key', $key)
+            ->display('hot.tpl');
+    }
+
+    public function newIndex($request, $response, $args)
+    {
+        if ($this->checkBrowser($request) == false) {
+            return;
+        }
+
+        $infos = Avinfonew::where('id', '<', '50000')
+            ->orderByRaw('RAND()')
+            ->take(200)
+            ->get();
+        $infos = $infos->filter(function($info){
+            $tmparray = explode('://',$info->embed);
+            if(count($tmparray)>1){
+                return false;
+            } else{
+                return true;
+            }
+        });
+        $index = true;
+        $new = true;
+        $key = "";
+        return $this->view()
+            ->assign('infos', $infos)
+            ->assign('index', $index)
+            ->assign('new', $new)
             ->assign('key', $key)
             ->display('hot.tpl');
     }
@@ -124,7 +156,7 @@ class HomeController extends BaseController
 
         $key = $args['key'];
         $infos = Avinfo::where('alt', 'like', '%'.$key.'%')
-            ->take(100)
+            ->take(200)
             ->get();
         $infos = $infos->filter(function($info){
             if (strpos($info->embed, '://') !== false) {
@@ -150,7 +182,7 @@ class HomeController extends BaseController
 
         $key = $args['key'];
         $infos = Avinfo::where('alt', 'like', '%'.$key.'%')
-            ->take(100)
+            ->take(200)
             ->get();
         $infos = $infos->filter(function($info){
             if (strpos($info->embed, '://') !== false) {

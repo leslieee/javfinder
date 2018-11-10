@@ -37,19 +37,31 @@
         <section id="primary">
             <div class="wrap-block">
                 <div class="container">
-
-
+                    {if $new == false}
+                    <div class="bar-main-block clearfix visible-xs">
+                        <div class="row">
+                            <div class="col-md-10">
+                                <h2><a href="/randmode" title="">看腻了? 试试4万部随机模式</a></h2>
+                            </div>
+                        </div>
+                    </div>
+                    {/if}
                     <div class="bar-main-block clearfix">
                         <div class="row">
-                            <div class="col-md-8 col-xs-8">
+                            <div class="col-xs-7 col-sm-4 col-md-4 col-lg-4">
                                 {if $key != ""}
                                 <h2 class="text-left">Search: {$key}</h2>
                                 {else}
-                                <h2 class="text-left">Popular Porn Videos</h2>
+                                <h2 class="text-left">Popular Porn</h2>
+                                {/if}
+                            </div>
+                            <div class="hidden-xs col-xs-5 col-sm-5 col-md-4 col-lg-4">
+                                {if $new == false}
+                                <h2><a href="/randmode" title="">看腻了? 试试4万部随机模式</a></h2>
                                 {/if}
                             </div>
                             {if $index}
-                            <div class="col-md-4 col-xs-4">
+                            <div class="col-xs-5 col-sm-3 col-md-4 col-lg-4">
                                 <h5 class="text-right"><a href="/movie/page/1" title="">View All Videos</a></h5>
                             </div>
                             {/if}
