@@ -10,7 +10,7 @@ class Avinfonew extends Model
     public function getProxyLink()
     {
         $imgLink = $this->attributes['data_src'];
-        $newImgLink = str_replace('https://cdnfd.me',Config::get('proxy_host'),$imgLink);
+        $newImgLink = str_replace('https://cdnfd.me/',Config::get('proxy_host'),$imgLink);
         return $newImgLink . '?http://cdnfd.me';
     }
 }

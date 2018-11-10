@@ -206,7 +206,7 @@ class HomeController extends BaseController
         }
 
         $id = $args['id'];
-        $info = Avinfo::where('data_id', $id)->first();
+        $info = Avinfonew::where('data_id', $id)->first();
         if ($info->embed == "" || $info->embed == "null") {
             $curl = curl_init();
             curl_setopt_array($curl, array(
@@ -367,7 +367,7 @@ class HomeController extends BaseController
         }
 
         $id = $args['id'];
-        $info = Avinfo::where('data_id', $id)->first();
+        $info = Avinfonew::where('data_id', $id)->first();
         if ($info->embed == "" || $info->embed == "null") {
             $curl = curl_init();
             curl_setopt_array($curl, array(
