@@ -241,7 +241,7 @@ class HomeController extends BaseController
                     $url = $new_url;
                     $array = explode('token', $url);
                     $str = str_replace('com/','com',$array[0]);
-                    $url = 'http://proxy.mekelove.ml/' . 'token' . $array[1] . '?' . $str;  
+                    $url = Config::get('proxy_host') . 'token' . $array[1] . '?' . $str;  
                     // return $this->redirect($response, $url);
                     $infos = Avinfo::where('star', 'like', '%'.$info->star.'%')
                         ->take(20)
@@ -304,7 +304,7 @@ class HomeController extends BaseController
                 $url = $new_url;
                 $array = explode('token', $url);
                 $str = str_replace('com/','com',$array[0]);
-                $url = 'http://proxy.mekelove.ml/' . 'token' . $array[1] . '?' . $str;  
+                $url = Config::get('proxy_host') . 'token' . $array[1] . '?' . $str;  
                 // return $this->redirect($response, $url);
                 $infos = Avinfo::where('star', 'like', '%'.$info->star.'%')
                     ->take(20)
@@ -412,7 +412,7 @@ class HomeController extends BaseController
                     $url = $new_url;
                     $array = explode('token', $url);
                     $str = str_replace('com/','com',$array[0]);
-                    $url = 'http://proxy.mekelove.ml/' . 'token' . $array[1] . '?' . $str;  
+                    $url = Config::get('proxy_host') . 'token' . $array[1] . '?' . $str;  
                     $res = [
                         "ret" => 1, 
                         "msg" => 'success',
@@ -469,7 +469,7 @@ class HomeController extends BaseController
                 $url = $new_url;
                 $array = explode('token', $url);
                 $str = str_replace('com/','com',$array[0]);
-                $url = 'http://proxy.mekelove.ml/' . 'token' . $array[1] . '?' . $str;  
+                $url = Config::get('proxy_host') . 'token' . $array[1] . '?' . $str;  
                 $res = [
                     "ret" => 1, 
                     "msg" => 'success',
