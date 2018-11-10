@@ -9,6 +9,8 @@ use App\Services\Boot;
 // Vendor Autoload
 require BASE_PATH . '/vendor/autoload.php';
 
+error_reporting(0);
+
 Boot::loadEnv();
 Boot::setDebug();
 Boot::setVersion(VERSION);
