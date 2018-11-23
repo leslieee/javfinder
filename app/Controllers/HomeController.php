@@ -210,7 +210,7 @@ class HomeController extends BaseController
         if ($info->embed == "" || $info->embed == "null") {
             $curl = curl_init();
             curl_setopt_array($curl, array(
-                CURLOPT_URL => "https://javfinder.ru/stream/sw0/" . $id,
+                CURLOPT_URL => "https://javfinder.cc/stream/sw0/" . $id,
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => "",
                 CURLOPT_MAXREDIRS => 10,
@@ -236,7 +236,7 @@ class HomeController extends BaseController
                 $info->embed = $out;
                 $info->save();
                 curl_setopt_array($curl, array(
-                    CURLOPT_URL => "https://qdembed.com/api/source/" . $out,
+                    CURLOPT_URL => "https://embed.media/api/source/" . $out,
                     CURLOPT_RETURNTRANSFER => true,
                     CURLOPT_ENCODING => "",
                     CURLOPT_MAXREDIRS => 10,
@@ -259,7 +259,7 @@ class HomeController extends BaseController
                         return $this->redirect($response, '/');
                     }
                     $last = end($res["data"]);
-                    $url  = "https://qdembed.com" . $last["file"];
+                    $url  = "https://embed.media" . $last["file"];
                     // 解析真实地址
                     $ch = curl_init();
                     curl_setopt($ch, CURLOPT_URL, $url); //set url
@@ -299,7 +299,7 @@ class HomeController extends BaseController
             // fembed已存在
             $curl = curl_init();
             curl_setopt_array($curl, array(
-                CURLOPT_URL => "https://qdembed.com/api/source/" . $info->embed,
+                CURLOPT_URL => "https://embed.media/api/source/" . $info->embed,
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => "",
                 CURLOPT_MAXREDIRS => 10,
@@ -322,7 +322,7 @@ class HomeController extends BaseController
                     return $this->redirect($response, '/');
                 }
                 $last = end($res["data"]);
-                $url  = "https://qdembed.com" . $last["file"];
+                $url  = "https://embed.media" . $last["file"];
                 // 解析真实地址
                 $ch = curl_init();
                 curl_setopt($ch, CURLOPT_URL, $url); //set url
@@ -371,7 +371,7 @@ class HomeController extends BaseController
         if ($info->embed == "" || $info->embed == "null") {
             $curl = curl_init();
             curl_setopt_array($curl, array(
-                CURLOPT_URL => "https://javfinder.ru/stream/sw0/" . $id,
+                CURLOPT_URL => "https://javfinder.cc/stream/sw0/" . $id,
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => "",
                 CURLOPT_MAXREDIRS => 10,
@@ -401,7 +401,7 @@ class HomeController extends BaseController
                 $info->embed = $out;
                 $info->save();
                 curl_setopt_array($curl, array(
-                    CURLOPT_URL => "https://qdembed.com/api/source/" . $out,
+                    CURLOPT_URL => "https://embed.media/api/source/" . $out,
                     CURLOPT_RETURNTRANSFER => true,
                     CURLOPT_ENCODING => "",
                     CURLOPT_MAXREDIRS => 10,
@@ -430,7 +430,7 @@ class HomeController extends BaseController
                         return $this->echoJson($response, $res);
                     }
                     $last = end($res["data"]);
-                    $url  = "https://qdembed.com" . $last["file"];
+                    $url  = "https://embed.media" . $last["file"];
                     // 解析真实地址
                     $ch = curl_init();
                     curl_setopt($ch, CURLOPT_URL, $url); //set url
@@ -458,7 +458,7 @@ class HomeController extends BaseController
             // fembed已存在
             $curl = curl_init();
             curl_setopt_array($curl, array(
-                CURLOPT_URL => "https://qdembed.com/api/source/" . $info->embed,
+                CURLOPT_URL => "https://embed.media/api/source/" . $info->embed,
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => "",
                 CURLOPT_MAXREDIRS => 10,
@@ -487,7 +487,7 @@ class HomeController extends BaseController
                     return $this->echoJson($response, $res);
                 }
                 $last = end($res["data"]);
-                $url  = "https://qdembed.com" . $last["file"];
+                $url  = "https://embed.media" . $last["file"];
                 // 解析真实地址
                 $ch = curl_init();
                 curl_setopt($ch, CURLOPT_URL, $url); //set url
