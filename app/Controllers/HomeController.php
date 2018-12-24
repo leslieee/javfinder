@@ -273,8 +273,8 @@ class HomeController extends BaseController
                     $new_url = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL); //extract the url from the header response
                     curl_close($ch);
                     $url = $new_url;
-                    $array = explode('token', $url);
-                    $str = str_replace('com/','com',$array[0]);
+                    $array = explode('/token', $url);
+                    $str = str_replace('https','http',$array[0]);
                     $url = Config::get('proxy_host') . 'token' . $array[1] . '?' . $str;  
                     // return $this->redirect($response, $url);
                     $infos = Avinfo::where('star', 'like', '%'.$info->star.'%')
@@ -337,8 +337,8 @@ class HomeController extends BaseController
                 $new_url = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL); //extract the url from the header response
                 curl_close($ch);
                 $url = $new_url;
-                $array = explode('token', $url);
-                $str = str_replace('com/','com',$array[0]);
+                $array = explode('/token', $url);
+                $str = str_replace('https','http',$array[0]);
                 $url = Config::get('proxy_host') . 'token' . $array[1] . '?' . $str;  
                 // return $this->redirect($response, $url);
                 $infos = Avinfo::where('star', 'like', '%'.$info->star.'%')
@@ -447,8 +447,8 @@ class HomeController extends BaseController
                     $new_url = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL); //extract the url from the header response
                     curl_close($ch);
                     $url = $new_url;
-                    $array = explode('token', $url);
-                    $str = str_replace('com/','com',$array[0]);
+                    $array = explode('/token', $url);
+                    $str = str_replace('https','http',$array[0]);
                     $url = Config::get('proxy_host') . 'token' . $array[1] . '?' . $str;  
                     $res = [
                         "ret" => 1, 
@@ -505,8 +505,8 @@ class HomeController extends BaseController
                 $new_url = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL); //extract the url from the header response
                 curl_close($ch);
                 $url = $new_url;
-                $array = explode('token', $url);
-                $str = str_replace('com/','com',$array[0]);
+                $array = explode('/token', $url);
+                $str = str_replace('https','http',$array[0]);
                 $url = Config::get('proxy_host') . 'token' . $array[1] . '?' . $str;  
                 $res = [
                     "ret" => 1, 
